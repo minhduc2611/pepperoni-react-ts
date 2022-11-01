@@ -12,23 +12,30 @@ export const initialState: CartState = {
 
 const reducer = produce(
   (state: CartState = initialState, action: ICartAction) => {
-
     switch (action.type) {
       case CartActionType.ADD_TO_CART:
         if (!state.checkout) {
           state.checkout = new CheckOut(action.payload.customer)
         }
         state.checkout.add(action.payload.pizza)
-        console.log('checkout', state.checkout)
-
         /** 
          * workaround for component rerendering
          * redux could not see any change of the Checkout object alone
          */
-        let renderId = uuidv4()
-        console.log('renderId', renderId)
-        state.renderId = renderId
+        state.renderId = uuidv4()
         return state;
+      case CartActionType.REMOVE_FROM_CART:
+        if (!state.checkout) {
+          throw new Error("Checkout is null");
+        }
+        state.checkout.remove(action.payload.id)
+        /** 
+         * workaround for component rerendering
+         * redux could not see any change of the Checkout object alone
+         */
+        state.renderId = uuidv4()
+        return state;
+
       case CartActionType.CLEAR_CART:
         state.checkout = null
         return state;

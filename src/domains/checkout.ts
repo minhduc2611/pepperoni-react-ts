@@ -1,12 +1,13 @@
 import { v4 as uuidv4 } from 'uuid';
+import CouponManager from './coupon-manager';
 import Customer from './customer';
 import Pizza, { GroupedPizza } from './pizza';
 
 export default class CheckOut {
     items: Pizza[] = [];
     freeItems: Pizza[] = [];
-    // groupedItems: Record<GroupedPizza['name'], GroupedPizza> = {};
     id: string;
+
     private customer: Customer;
     constructor(customer: Customer) {
         this.id = uuidv4()
@@ -14,7 +15,10 @@ export default class CheckOut {
     }
     add(pizza: Pizza) {
         this.items.push(pizza)
-
+    }
+    remove(id: string) {
+        let index = this.items.findIndex((i) => i.id == id)
+        this.items.splice(index, 1)
     }
     private grouping(): Record<string, GroupedPizza> {
         let groupedItems: Record<string, GroupedPizza> = {};
@@ -34,8 +38,7 @@ export default class CheckOut {
         // calculate grouped items based on coupons 
         this.customer.coupons.forEach((coupon) => {
             console.log('coupon', coupon);
-
-            couponManager(coupon, groupedItems)
+            CouponManager.apply(coupon, groupedItems)
         })
 
         return groupedItems
@@ -44,53 +47,16 @@ export default class CheckOut {
         return Object.values(this.grouping())
     }
     total() {
-        let total = Object.values(this.grouping()).reduce(
+        const calculatedItem = this.grouping()
+        let totalAmount = Object.values(calculatedItem).reduce(
             (partialSum, item) => partialSum + (item.discountedAmount ? item.discountedAmount : item.amount)
             , 0);
-        // console.log('customer', this.customer)
-        // console.log('total', total)
-        return total
-    }
-}
-
-
-/**
- * coupon manager take in groupedItems and return new caulated groupedItems
- * coupon can apply to a single item, or a group of items 
- */
-const couponManager = (coupon: string, groupedItems: Record<string, GroupedPizza>) => {
-    if (Object.keys(groupedItems).length === 0) return;
-    console.log('groupedItems', groupedItems)
-    switch (coupon) {
-        case 'GET_1_FREE_FOR_2_SMALL':
-            /**
-             * logic: quantity >= 2, + 1 free item to quantity
-             */
-            console.log('groupedItems GET_1_FREE_FOR_2_SMALL', groupedItems)
-
-            if (groupedItems['Small Pizza'] && groupedItems['Small Pizza'].quantity >= 2) {
-                console.log('groupedItems GET_1_FREE_FOR_2_SMALL', groupedItems)
-
-                // add quantity without adding amount
-                groupedItems['Small Pizza'].addFreeQuantity(1)
-            }
-            break;
-        case 'GET_1_FREE_FOR_4_MEDIUM':
-            /**
-             * logic: quantity >= 4, + 1 free item to quantity
-             */
-            if (groupedItems['Medium Pizza'] && groupedItems['Medium Pizza'].quantity >= 4) {
-                // add quantity without adding amount
-                groupedItems['Medium Pizza'].addFreeQuantity(1)
-            }
-            break;
-        case 'DISCOUNT_LARGE_19_99':
-            if (groupedItems['Large Pizza']) {
-                let quantity = groupedItems['Large Pizza'].quantity
-                groupedItems['Large Pizza'].setDiscountedAmount(quantity * 19.99)
-            }
-            break;
-        default:
-            break;
+        let totalQuantity = Object.values(calculatedItem).reduce(
+            (partialSum, item) => partialSum + item.freeQuantity + item.quantity
+            , 0);
+        return {
+            totalAmount : totalAmount.toFixed(2) ,
+            totalQuantity 
+        }
     }
 }

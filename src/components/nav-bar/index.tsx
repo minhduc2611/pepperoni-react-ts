@@ -1,6 +1,8 @@
 import {
     Avatar,
-    AvatarBadge, Box, Button, ButtonGroup, Flex, Heading, Menu,
+    AvatarBadge, Box, Button, ButtonGroup, Drawer,
+    DrawerBody, DrawerContent, DrawerHeader,
+    DrawerOverlay, Flex, Heading, Image, Menu,
     MenuButton, MenuDivider, MenuGroup, MenuItem, MenuList, Modal, ModalBody,
     ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Spacer, Text,
     useDisclosure
@@ -9,13 +11,16 @@ import { useTypedSelector } from '../../reducers';
 import Cart from '../cart';
 import Login from '../login';
 import Logout from '../logout';
+
 const NavBar = () => {
     const user = useTypedSelector((state) => state.user?.user)
     const { isOpen, onOpen, onClose } = useDisclosure()
+    const { isOpen: isDrawerOpen, onOpen: onOpenDrawer, onClose: onCloseDrawer } = useDisclosure()
     return (
         <Flex height={50} minWidth='max-content' alignItems='center' gap='2'>
-            <Box p='2'>
-                <Heading size='md'>Pepperonis Pizza</Heading>
+            <Box display={'flex'} p='2'>
+                <Image boxSize='50px' objectFit='cover' src='pizza-logo.jpg' alt='Dan Abramov' />
+                <Heading alignSelf={'center'} size='md'>Pepperonis Pizza</Heading>
             </Box>
             <Spacer />
             <ButtonGroup gap='2'>
@@ -33,7 +38,19 @@ const NavBar = () => {
                         <MenuList>
                             <MenuGroup title='Profile'>
                                 <MenuItem>My Account</MenuItem>
-                                <MenuItem>My Coupons </MenuItem>
+                                <MenuItem onClick={(event) => {
+                                    event.preventDefault()
+                                    onOpenDrawer()
+                                }}>My Coupons </MenuItem>
+                                <Drawer placement={'bottom'} onClose={onCloseDrawer} isOpen={isDrawerOpen}>
+                                    <DrawerOverlay />
+                                    <DrawerContent>
+                                        <DrawerHeader borderBottomWidth='1px'>My Special Coupons</DrawerHeader>
+                                        <DrawerBody h={300}>
+                                            {user.coupons.map((coupon, index) => <Text border={'dashed'} w={350} background={'#ccc'} p={3} m={1} key={index}>{coupon}</Text>)}
+                                        </DrawerBody>
+                                    </DrawerContent>
+                                </Drawer>
                             </MenuGroup>
                             <MenuDivider />
                             <MenuGroup title='Help'>
@@ -41,7 +58,7 @@ const NavBar = () => {
                             </MenuGroup>
                         </MenuList>
                     </Menu>
-                    : <Button onClick={onOpen} colorScheme='teal'>Log in</Button>}
+                    : <Button mx={2} onClick={onOpen} colorScheme='teal'>Log in</Button>}
                 <Modal isOpen={isOpen} onClose={onClose}>
                     <ModalOverlay />
                     <ModalContent>

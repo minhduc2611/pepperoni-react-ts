@@ -15,8 +15,15 @@ export interface IClearCartAction {
   type: CartActionType.CLEAR_CART;
 }
 
+export interface IRemoveItemFromCartAction {
+  type: CartActionType.REMOVE_FROM_CART;
+  payload: {
+    id: string
+  };
+}
+
 
 export type ICartAction =
   | IAddItemToCartAction
   | IClearCartAction
- 
+  | IRemoveItemFromCartAction

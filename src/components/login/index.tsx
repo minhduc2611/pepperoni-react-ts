@@ -1,9 +1,8 @@
-import { Button, Select } from '@chakra-ui/react';
+import { Button, Select, useToast } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import UserAPI from '../../apis/api-creators/users.api';
 import Customer from '../../domains/customer';
-import { useTypedSelector, useUserActions } from '../../reducers';
-import { useToast } from '@chakra-ui/react'
+import { useUserActions } from '../../reducers';
 
 export interface LoginProps {
     onClose?: () => void
@@ -49,9 +48,9 @@ const Login: React.FC<LoginProps> = ({ onClose = () => { } }) => {
         <>
             <Select onChange={(uN) => setUserName(uN.target.value)} placeholder='-- User --'>
                 {users && users.map((user, index) => <option key={index} value={user.name}>{user.name}</option>)}
-                <option key={''} value={'False User'}>False User</option>
+                <option key={'false user'} value={'False User'}>False User</option>
             </Select>
-            <Button disabled={!userName} onClick={onLogin} colorScheme='blue' mt={3}>
+            <Button disabled={!userName} onClick={onLogin} colorScheme='teal' mt={3}>
                 Login
             </Button>
         </>

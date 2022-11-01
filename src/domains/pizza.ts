@@ -12,13 +12,15 @@ export default class Pizza {
     description: string
     price: number
     type: PizzaType
+    ingredients: string
 
-    constructor(name: string, description: string, price: number, type: PizzaType) {
+    constructor(name: string, description: string, price: number, type: PizzaType, ingredients: string) {
         this.id = uuidv4()
         this.name = name
         this.description = description
         this.price = price
         this.type = type
+        this.ingredients = ingredients
     }
 }
 
@@ -32,7 +34,7 @@ export class GroupedPizza extends Pizza {
     //     maximumFractionDigits: 2,
     // });
     constructor(pizza: Pizza) {
-        super(pizza.name, pizza.description, pizza.price, pizza.type)
+        super(pizza.name, pizza.description, pizza.price, pizza.type, pizza.ingredients)
     }
     addQuantity(q: number) {
         this.quantity = this.quantity + q

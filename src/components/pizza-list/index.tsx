@@ -1,5 +1,5 @@
 import {
-    List
+    Stack
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import PizzaAPI from '../../apis/api-creators/pizzas.api';
@@ -16,9 +16,14 @@ const PizzaList = () => {
     }, [])
 
     return (
-        <List spacing={3}>
+        <Stack p={10} direction={[
+            'column', // sm
+            'column', // md
+            'column', // lg
+            'row' // xl
+        ]} spacing='24px'>
             {pizzasState && pizzasState.map((pizza, index) => (<PizzaItem key={index} pizza={pizza} />))}
-        </List>
+        </Stack>
     );
 };
 
