@@ -4,8 +4,8 @@ export default class CouponManager {
     constructor() {
     }
     /**
-     * coupon manager take in groupedItems and return new caulated groupedItems
-     * coupon can apply to a single item, or a group of items 
+     * coupon manager take in groupedItems and return new caculated groupedItems
+     * coupons can effect to a single item (price), or a group of items (1 for free)
      */
     static apply(coupon: string, groupedItems: Record<string, GroupedPizza>) {
         if (Object.keys(groupedItems).length === 0) return;
