@@ -11,17 +11,12 @@ export default class CouponManager {
      */
     static apply(coupon: string, groupedItems: Record<string, GroupedPizza>) {
         if (Object.keys(groupedItems).length === 0) return;
-        console.log('groupedItems', groupedItems)
         switch (coupon) {
             case 'GET_1_FREE_FOR_2_SMALL':
                 /**
                  * logic: quantity >= 2, + 1 free item to quantity
                  */
-                console.log('groupedItems GET_1_FREE_FOR_2_SMALL', groupedItems)
-
                 if (groupedItems['Small Pizza'] && groupedItems['Small Pizza'].quantity >= 2) {
-                    console.log('groupedItems GET_1_FREE_FOR_2_SMALL', groupedItems)
-
                     // add quantity without adding amount
                     groupedItems['Small Pizza'].addFreeQuantity(1)
                 }

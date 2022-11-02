@@ -1,8 +1,4 @@
 import { v4 as uuidv4 } from 'uuid';
-import { Assign } from 'utility-types';
-
-
-// export type GroupedPizza = Assign<Pizza, { quantity: number, amount: number }>;
 
 export type PizzaType = 'small' | 'large' | 'medium'
 
@@ -46,7 +42,6 @@ export class GroupedPizza extends Pizza {
     }
     addFreeQuantity(q: number) {
         this.freeQuantity = this.freeQuantity + q
-        console.log('groupedItems addFreeQuantity', this.freeQuantity);
     }
     setDiscountedAmount(q: number) {
         this.discountedAmount = q

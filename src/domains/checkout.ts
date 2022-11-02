@@ -37,7 +37,6 @@ export default class CheckOut {
 
         // calculate grouped items based on coupons 
         this.customer.coupons.forEach((coupon) => {
-            console.log('coupon', coupon);
             CouponManager.apply(coupon, groupedItems)
         })
 
@@ -55,7 +54,7 @@ export default class CheckOut {
             (partialSum, item) => partialSum + item.freeQuantity + item.quantity
             , 0);
         return {
-            totalAmount : totalAmount.toFixed(2) ,
+            totalAmount : parseFloat(totalAmount.toFixed(2)) ,
             totalQuantity 
         }
     }
