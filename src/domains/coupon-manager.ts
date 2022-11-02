@@ -1,6 +1,4 @@
-import { v4 as uuidv4 } from 'uuid';
-import Customer from './customer';
-import Pizza, { GroupedPizza } from './pizza';
+import { GroupedPizza } from './pizza';
 
 export default class CouponManager {
     constructor() {

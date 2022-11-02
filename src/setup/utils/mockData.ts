@@ -15,7 +15,7 @@ export const mockPizza = (type?: PizzaType) => {
 }
 
 
-export const mockCustomer = (type: string) => {
+export const mockCustomer = (type?: string) => {
     switch (type) {
         case "Microsoft":
             return new Customer("Microsoft", ['GET_1_FREE_FOR_2_SMALL'])
