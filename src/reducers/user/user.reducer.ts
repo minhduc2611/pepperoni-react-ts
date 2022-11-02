@@ -1,7 +1,5 @@
 import produce from 'immer';
-import { v4 as uuidv4 } from 'uuid';
 import { UserState } from '../../types';
-import { CartState } from '../../types/states/cart';
 import { UserActionType } from './user.action-types';
 import { IUserAction } from './user.actions';
 

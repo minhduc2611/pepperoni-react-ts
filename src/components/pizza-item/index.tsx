@@ -1,4 +1,4 @@
-import { Box, Button, Heading, Image, Text, Link, Badge } from '@chakra-ui/react';
+import { Badge, Box, Button, Image, Text } from '@chakra-ui/react';
 import { FC } from 'react';
 import Pizza from '../../domains/pizza';
 import { useCartActions, useTypedSelector } from '../../reducers';
