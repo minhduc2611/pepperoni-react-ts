@@ -45,15 +45,15 @@ const Login: React.FC<LoginProps> = ({ onClose = () => { } }) => {
     }
 
     return (
-        <>
-            <Select onChange={(uN) => setUserName(uN.target.value)} placeholder='-- User --'>
+        <React.Fragment>
+            <Select data-testid="select-user" onChange={(uN) => setUserName(uN.target.value)} placeholder='-- User --'>
                 {users && users.map((user, index) => <option key={index} value={user.name}>{user.name}</option>)}
                 <option key={'false user'} value={'False User'}>False User</option>
             </Select>
             <Button disabled={!userName} onClick={onLogin} colorScheme='teal' mt={3}>
                 Login
             </Button>
-        </>
+        </React.Fragment>
     );
 };
 
