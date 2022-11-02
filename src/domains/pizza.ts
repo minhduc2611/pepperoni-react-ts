@@ -29,15 +29,18 @@ export class GroupedPizza extends Pizza {
         super(pizza.name, pizza.description, pizza.price, pizza.type, pizza.ingredients)
     }
     addQuantity(q: number) {
-        this.quantity = this.quantity + q
+        this.quantity = this.toFixTwoDecimal(this.quantity + q)
     }
     addAmount(q: number) {
-        this.amount = this.amount + q
+        this.amount = this.toFixTwoDecimal(this.amount + q)
     }
     addFreeQuantity(q: number) {
-        this.freeQuantity = this.freeQuantity + q
+        this.freeQuantity = this.toFixTwoDecimal(this.freeQuantity + q)
     }
     setDiscountedAmount(q: number) {
-        this.discountedAmount = q
+        this.discountedAmount = this.toFixTwoDecimal(q)
+    }
+    private toFixTwoDecimal(num: number){
+        return parseFloat(num.toFixed(2))
     }
 }

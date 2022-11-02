@@ -2,6 +2,7 @@ import { Badge, Box, Button, Image, Text } from '@chakra-ui/react';
 import { FC } from 'react';
 import Pizza from '../../domains/pizza';
 import { useCartActions, useTypedSelector } from '../../reducers';
+import { specialPizzaShape } from '../pizza-animation';
 
 interface IPizzaItemProps {
     pizza: Pizza
@@ -45,9 +46,10 @@ const PizzaItem: FC<IPizzaItemProps> = ({ pizza }) => {
                 <Text display={{ lg: 'none' }} mt={2} color='gray.500'>
                     {pizza.ingredients}
                 </Text>
-                <Button disabled={!user} mt={2} role="button" onClick={() => {
+                <Button disabled={!user} mt={2} role="button" onClick={(e) => {
                     if (user) {
                         addItemToCart(pizza, user)
+                        specialPizzaShape(e)
                     }
                 }}>Add to cart</Button>
             </Box>
