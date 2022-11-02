@@ -25,20 +25,14 @@ export class GroupedPizza extends Pizza {
     amount: number = 0;
     freeQuantity: number = 0;
     discountedAmount: number = 0;
-    // private formatter = new Intl.NumberFormat('en-US', {
-    //     minimumFractionDigits: 2,
-    //     maximumFractionDigits: 2,
-    // });
     constructor(pizza: Pizza) {
         super(pizza.name, pizza.description, pizza.price, pizza.type, pizza.ingredients)
     }
     addQuantity(q: number) {
         this.quantity = this.quantity + q
-        //  parseInt(this.formatter.format())
     }
     addAmount(q: number) {
         this.amount = this.amount + q
-        //parseInt(this.formatter.format(this.amount + q))
     }
     addFreeQuantity(q: number) {
         this.freeQuantity = this.freeQuantity + q
