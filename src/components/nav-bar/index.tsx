@@ -7,19 +7,20 @@ import {
     ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Spacer, Text,
     useDisclosure
 } from '@chakra-ui/react';
-import { useTypedSelector } from '../../reducers';
+import { useCartActions, useTypedSelector, useUserActions } from '../../reducers';
 import Cart from '../cart';
 import Login from '../login';
-import Logout from '../logout';
 
 const NavBar = () => {
     const user = useTypedSelector((state) => state.user?.user)
     const { isOpen, onOpen, onClose } = useDisclosure()
+    const { setUserGlobal } = useUserActions()
+    const { clearCart } = useCartActions()
     const { isOpen: isDrawerOpen, onOpen: onOpenDrawer, onClose: onCloseDrawer } = useDisclosure()
     return (
         <Flex height={50} minWidth='max-content' alignItems='center' gap='2'>
             <Box display={'flex'} p='2'>
-                <Image boxSize='50px' objectFit='cover' src='pizza-logo.jpg' alt='Dan Abramov' />
+                <Image boxSize='50px' objectFit='cover' src='pizza-logo.jpg' alt='icon' />
                 <Heading alignSelf={'center'} size='md'>Pepperonis Pizza</Heading>
             </Box>
             <Spacer />
@@ -54,7 +55,12 @@ const NavBar = () => {
                             </MenuGroup>
                             <MenuDivider />
                             <MenuGroup title='Help'>
-                                <MenuItem as={Logout}></MenuItem>
+                                <MenuItem onClick={() => {
+                                    clearCart()
+                                    setUserGlobal(null)
+                                }}>
+                                    Log out
+                                </MenuItem>
                             </MenuGroup>
                         </MenuList>
                     </Menu>
@@ -62,12 +68,11 @@ const NavBar = () => {
                 <Modal isOpen={isOpen} onClose={onClose}>
                     <ModalOverlay />
                     <ModalContent>
-                        <ModalHeader>Login</ModalHeader>
+                        <ModalHeader>Choose An User</ModalHeader>
                         <ModalCloseButton />
                         <ModalBody>
                             <Login onClose={onClose} />
                         </ModalBody>
-
                         <ModalFooter>
                         </ModalFooter>
                     </ModalContent>
